@@ -1,0 +1,304 @@
+:root{
+  --bg:#0f1226;
+  --bg2:#1b1f42;
+  --card:#242a55;
+  --card2:#2d3468;
+  --ink:#f2f4ff;
+  --muted:#a8b0e0;
+  --accent:#5ee0c5;
+  --accent2:#ffd166;
+  --wrong:#ff6b7a;
+  --right:#4ade80;
+  --radius:18px;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Nunito","Segoe UI",system-ui,-apple-system,sans-serif;
+  background:radial-gradient(1200px 700px at 20% -10%, #2b3170 0%, var(--bg) 60%), var(--bg);
+  background-attachment:fixed;
+  color:var(--ink);
+  min-height:100vh;
+  min-height:100dvh;                          /* uten hopp når mobilens adresselinje skjules */
+  overflow-x:hidden;
+  -webkit-text-size-adjust:100%;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- topbar ---------- */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px max(18px, env(safe-area-inset-right)) 12px max(18px, env(safe-area-inset-left));gap:10px;
+  background:rgba(255,255,255,.04);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  position:sticky;top:0;z-index:10;backdrop-filter:blur(8px);
+}
+.brand{font-weight:900;font-size:22px;letter-spacing:.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.logo{font-size:24px}
+.topstats{display:flex;align-items:center;gap:8px}
+.chip{
+  background:var(--card);border:1px solid rgba(255,255,255,.1);
+  padding:6px 12px;border-radius:999px;font-size:15px;white-space:nowrap;
+}
+.chip b{color:var(--accent2)}
+
+main{
+  max-width:820px;margin:0 auto;
+  padding:22px max(16px, env(safe-area-inset-left)) calc(60px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-right));
+}
+
+/* ---------- skjermer ---------- */
+.screen{display:none;animation:fade .25s ease}
+.screen.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+h1{font-size:34px;margin:8px 0 6px;text-align:center}
+h2{font-size:26px;margin:6px 0 14px}
+h3{font-size:18px;margin:26px 0 10px;color:var(--muted)}
+.lead{text-align:center;color:var(--muted);margin:0 0 22px;line-height:1.5}
+
+/* ---------- knapper ---------- */
+button{
+  font-family:inherit;cursor:pointer;border:none;
+  transition:transform .08s ease, background .15s ease, box-shadow .15s;
+  touch-action:manipulation;                 /* ingen dobbeltrykk-zoom */
+  -webkit-tap-highlight-color:transparent;
+  -webkit-user-select:none;user-select:none;
+}
+button:active{transform:scale(.97)}
+.primary{
+  background:linear-gradient(135deg,var(--accent),#49b7f7);
+  color:#06210f;font-weight:900;font-size:19px;
+  padding:14px 26px;border-radius:999px;box-shadow:var(--shadow);
+}
+.ghost{
+  background:transparent;color:var(--ink);font-weight:700;font-size:17px;
+  padding:13px 24px;border-radius:999px;border:2px solid rgba(255,255,255,.2);
+}
+.danger{
+  background:transparent;color:var(--wrong);font-weight:700;font-size:15px;
+  padding:13px 20px;border-radius:999px;border:2px solid rgba(255,107,122,.4);
+}
+.iconbtn{
+  background:var(--card);color:var(--ink);font-size:18px;
+  width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;flex:0 0 auto;
+}
+.linkbtn{
+  display:block;margin:22px auto 0;background:none;color:var(--accent);
+  font-size:17px;font-weight:800;text-decoration:underline;
+  padding:12px 18px;min-height:44px;                  /* trykkflate på mobil */
+}
+.rowbtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+.hidden{display:none !important}
+
+/* ---------- modusvalg ---------- */
+.modepick{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:22px}
+.modebtn{
+  background:var(--card);color:var(--muted);font-weight:800;font-size:15px;
+  padding:10px 16px;border-radius:999px;border:2px solid transparent;
+}
+.modebtn.active{border-color:var(--accent);color:var(--ink);background:var(--card2)}
+
+/* ---------- nivåkort ---------- */
+.levelgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.levelcard{
+  background:var(--card);border:1px solid rgba(255,255,255,.08);
+  border-radius:var(--radius);padding:16px;text-align:left;color:var(--ink);
+  display:flex;flex-direction:column;gap:8px;box-shadow:var(--shadow);
+}
+@media (hover:hover){
+  .levelcard:hover{background:var(--card2)}
+  }
+.levelcard .lvhead{display:flex;align-items:center;gap:10px;font-weight:900;font-size:18px}
+.levelcard .lvicon{font-size:26px}
+.levelcard .lvdesc{color:var(--muted);font-size:14px;line-height:1.4}
+.levelcard .bar{margin-top:auto}            /* bunnlinjene står på linje i rutenettet */
+.levelcard .lvexample{
+  font-family:ui-monospace,"SF Mono",Menlo,monospace;color:var(--accent2);
+  font-size:14px;letter-spacing:.5px;
+}
+.bar{height:9px;border-radius:999px;background:rgba(255,255,255,.12);overflow:hidden}
+.bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:999px;transition:width .5s}
+.lvfoot{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+.mastered{color:var(--right);font-weight:800}
+
+/* ---------- quiz ---------- */
+.quizbar{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.progresswrap{flex:1;height:12px;background:rgba(255,255,255,.12);border-radius:999px;overflow:hidden}
+.progressfill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .3s}
+.qcount{font-weight:800;color:var(--muted);font-size:15px}
+.qcount b{color:var(--ink)}
+
+.qarea{text-align:center;margin-bottom:26px}
+.qtitle{color:var(--muted);font-size:17px;margin-bottom:14px}
+
+/* digital klokke */
+.clock{
+  display:inline-block;position:relative;
+  background:#0a0d1f;border:3px solid #3a4280;border-radius:20px;
+  padding:18px 30px;box-shadow:inset 0 0 40px rgba(94,224,197,.12), var(--shadow);
+}
+.clock .digits{
+  font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  font-size:clamp(48px,14vw,84px);font-weight:700;letter-spacing:4px;
+  color:var(--accent);text-shadow:0 0 18px rgba(94,224,197,.55);
+  position:relative;z-index:1;
+}
+.clock .ghost-digits{
+  position:absolute;inset:18px 30px;
+  font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  font-size:clamp(48px,14vw,84px);font-weight:700;letter-spacing:4px;
+  color:rgba(94,224,197,.08);z-index:0;pointer-events:none;
+}
+.daypart{margin-top:10px;color:var(--muted);font-size:16px}
+
+/* tekstspørsmål */
+.textclock{
+  font-size:clamp(26px,7vw,40px);font-weight:900;line-height:1.3;
+  background:var(--card);border-radius:var(--radius);padding:24px 20px;
+  box-shadow:var(--shadow);
+}
+
+/* ---------- svaralternativer ---------- */
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:560px){.answers{grid-template-columns:1fr}}
+.answer{
+  background:var(--card);color:var(--ink);border:2px solid rgba(255,255,255,.1);
+  border-radius:var(--radius);padding:18px 14px;font-size:19px;font-weight:800;
+  text-align:center;min-height:68px;box-shadow:var(--shadow);line-height:1.3;
+}
+.answer.mono{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:30px;letter-spacing:2px;color:var(--accent)}
+.answer:hover:not(:disabled){background:var(--card2);border-color:rgba(255,255,255,.25)}
+.answer:disabled{cursor:default;opacity:.55}
+.answer.correct{background:rgba(74,222,128,.18);border-color:var(--right);opacity:1}
+.answer.wrong{background:rgba(255,107,122,.18);border-color:var(--wrong);opacity:1}
+
+.feedback{min-height:56px;margin:20px 0 6px;text-align:center;font-size:19px;font-weight:800}
+.feedback .sub{display:block;font-size:15px;font-weight:600;color:var(--muted);margin-top:6px}
+.feedback.ok{color:var(--right)}
+.feedback.no{color:var(--wrong)}
+#nextBtn{display:block;margin:0 auto}
+
+/* ---------- oppsummering ---------- */
+.summary{
+  background:var(--card);border-radius:var(--radius);padding:30px 22px;text-align:center;box-shadow:var(--shadow);
+}
+.summary .big{font-size:58px;margin-bottom:6px}
+.summary h2{margin:0 0 10px}
+.summary .score{font-size:42px;font-weight:900;color:var(--accent2);margin:12px 0}
+.summary p{color:var(--muted);margin:6px 0;font-size:17px}
+.newbadge{
+  display:inline-block;background:rgba(255,209,102,.15);border:1px solid var(--accent2);
+  color:var(--accent2);border-radius:999px;padding:8px 16px;margin:6px 4px;font-weight:800;
+}
+
+/* ---------- statistikk ---------- */
+.statstop{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.stattile{background:var(--card);border-radius:var(--radius);padding:16px;text-align:center;box-shadow:var(--shadow)}
+.stattile .v{font-size:32px;font-weight:900;color:var(--accent)}
+.stattile .l{color:var(--muted);font-size:14px;margin-top:4px}
+
+.chart{
+  display:flex;align-items:flex-end;gap:10px;height:170px;
+  background:var(--card);border-radius:var(--radius);padding:16px 14px 10px;box-shadow:var(--shadow);
+}
+.chart .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end}
+.chart .colbar{
+  width:100%;max-width:44px;border-radius:8px 8px 4px 4px;
+  background:linear-gradient(180deg,var(--accent),#49b7f7);min-height:4px;transition:height .5s;
+  position:relative;
+}
+.chart .colval{font-size:12px;color:var(--accent2);font-weight:800}
+.chart .collabel{font-size:12px;color:var(--muted)}
+.chart .col.today .collabel{color:var(--accent);font-weight:900}
+
+.levelstats{display:flex;flex-direction:column;gap:10px}
+.lsrow{background:var(--card);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow)}
+.lsrow .lshead{display:flex;justify-content:space-between;font-weight:800;margin-bottom:8px;font-size:15px}
+.lsrow .lssub{color:var(--muted);font-size:13px;margin-top:6px}
+
+.badges{display:flex;flex-wrap:wrap;gap:10px}
+.badge{
+  background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:14px;
+  padding:12px 14px;flex:1 1 150px;text-align:center;opacity:.35;
+}
+.badge.earned{opacity:1;border-color:var(--accent2);background:rgba(255,209,102,.1)}
+.badge .bi{font-size:28px}
+.badge .bn{font-weight:800;font-size:14px;margin-top:4px}
+.badge .bd{color:var(--muted);font-size:12px;margin-top:2px}
+
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
+
+/* ---------- mobiltilpasning ---------- */
+@media (max-width:560px){
+  .answers.compact{grid-template-columns:1fr 1fr}   /* 07:00 er kort — to i bredden går fint */
+}
+
+@media (max-width:480px){
+  main{padding-top:16px}
+  h1{font-size:27px}
+  h2{font-size:22px}
+  h3{font-size:16px;margin-top:22px}
+  .lead{font-size:15px;margin-bottom:18px}
+  .brand{font-size:18px}
+  .logo{font-size:20px}
+  .chip{padding:5px 10px;font-size:14px}
+  .modepick{gap:6px}
+  .modebtn{font-size:14px;padding:9px 12px;flex:1 1 auto}
+  .levelcard{padding:14px;gap:7px}
+  .levelcard .lvhead{font-size:16px}
+  .levelcard .lvicon{font-size:22px}
+  .levelcard .lvdesc{font-size:13px}
+  .answer{font-size:17px;padding:16px 12px;min-height:62px}
+  .answer.mono{font-size:26px}
+  .feedback{font-size:17px}
+  #nextBtn{width:100%;max-width:100%}
+  .rowbtns{gap:10px}
+  .rowbtns > button{flex:1 1 100%}
+  .chart{height:150px;gap:6px;padding:14px 10px 8px}
+  .stattile{padding:13px}
+  .stattile .v{font-size:27px}
+  .summary{padding:24px 16px}
+  .summary .big{font-size:48px}
+  .summary .score{font-size:34px}
+  .badge{flex:1 1 calc(50% - 10px);padding:10px}
+}
+
+/* lave skjermer: hele spørsmålet skal få plass uten scrolling */
+@media (max-width:560px) and (max-height:720px){
+  .qarea{margin-bottom:16px}
+  .qtitle{font-size:15px;margin-bottom:10px}
+  .clock{padding:12px 22px}
+  .clock .digits,
+  .clock .ghost-digits{font-size:clamp(40px,12vw,62px)}
+  .clock .ghost-digits{inset:12px 22px}
+  .textclock{font-size:clamp(22px,6.4vw,32px);padding:18px 14px}
+  .answers{gap:10px}
+  .answer{min-height:56px;padding:13px 10px}
+  .feedback{min-height:48px;margin:14px 0 4px}
+}
+
+@media (max-width:340px){
+  .brandname{display:none}
+  .answers.compact{grid-template-columns:1fr}
+}
+
+/* telefon i landskap: lav skjerm, spørsmålet skal fortsatt få plass */
+@media (max-height:500px) and (orientation:landscape){
+  .topbar{padding-top:8px;padding-bottom:8px}
+  main{padding-top:14px}
+  h1{font-size:26px;margin-top:0}
+  .lead{margin-bottom:14px}
+  .qarea{margin-bottom:14px}
+  .qtitle{font-size:15px;margin-bottom:8px}
+  .clock{padding:8px 20px}
+  .clock .digits,
+  .clock .ghost-digits{font-size:clamp(34px,9vh,52px)}
+  .clock .ghost-digits{inset:8px 20px}
+  .textclock{font-size:clamp(22px,5vh,30px);padding:14px}
+  .answer{min-height:52px;padding:12px 10px;font-size:17px}
+  .feedback{min-height:44px;margin:12px 0 4px}
+}

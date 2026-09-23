@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f1226">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Klokkelab – lær digital klokke</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⏰</text></svg>">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand"><span class="logo">⏰</span> <span class="brandname">Klokkelab</span></div>
+  <div class="topstats">
+    <span class="chip" title="Poeng totalt">⭐ <b id="xpChip">0</b></span>
+    <span class="chip" title="Beste rekke på rad">🔥 <b id="streakChip">0</b></span>
+    <button id="soundBtn" class="iconbtn" title="Lyd av/på" aria-label="Lyd av eller på">🔊</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ HJEM ============ -->
+  <section id="screen-home" class="screen active">
+    <h1>Hva er klokka?</h1>
+    <p class="lead">Velg et nivå og svar på 10 spørsmål. Riktig svar gir poeng, og framgangen din lagres.</p>
+
+    <div class="modepick" role="group" aria-label="Spillmodus">
+      <button class="modebtn active" data-mode="read">🔢 ➜ 📝 Les klokka</button>
+      <button class="modebtn" data-mode="set">📝 ➜ 🔢 Sett klokka</button>
+      <button class="modebtn" data-mode="mix">🔀 Blandet</button>
+    </div>
+
+    <div id="levelGrid" class="levelgrid"></div>
+
+    <button id="statsLink" class="linkbtn">📈 Se progresjonen min</button>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section id="screen-quiz" class="screen">
+    <div class="quizbar">
+      <button id="quitBtn" class="iconbtn" aria-label="Avslutt runde">✕</button>
+      <div class="progresswrap"><div id="progressFill" class="progressfill"></div></div>
+      <div class="qcount"><b id="qNow">1</b>/<span id="qTotal">10</span></div>
+    </div>
+
+    <div id="questionArea" class="qarea"></div>
+
+    <div id="answers" class="answers"></div>
+
+    <div id="feedback" class="feedback" aria-live="polite"></div>
+    <button id="nextBtn" class="primary hidden">Neste →</button>
+  </section>
+
+  <!-- ============ OPPSUMMERING ============ -->
+  <section id="screen-summary" class="screen">
+    <div id="summaryCard" class="summary"></div>
+    <div class="rowbtns">
+      <button id="againBtn" class="primary">🔁 Spill igjen</button>
+      <button id="homeBtn" class="ghost">🏠 Til forsiden</button>
+    </div>
+  </section>
+
+  <!-- ============ PROGRESJON ============ -->
+  <section id="screen-stats" class="screen">
+    <h2>📈 Progresjonen din</h2>
+    <div id="statsTop" class="statstop"></div>
+
+    <h3>Siste 7 dager</h3>
+    <div id="chart" class="chart"></div>
+
+    <h3>Nivåene dine</h3>
+    <div id="levelStats" class="levelstats"></div>
+
+    <h3>Merker</h3>
+    <div id="badges" class="badges"></div>
+
+    <div class="rowbtns">
+      <button id="backBtn" class="primary">← Tilbake</button>
+      <button id="resetBtn" class="danger">🗑 Nullstill framgang</button>
+    </div>
+  </section>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
