@@ -19,6 +19,12 @@ noe sted, og ingen innlogging trengs. Se [personvernerklæringen](personvern.htm
 | 📝 ➜ 🔢 Sett klokka | Du får teksten og skal finne riktig klokkeslett |
 | 🔀 Blandet | Tilfeldig blanding av begge |
 
+Under modusvalget kan du velge om klokkeslettet skal sammenlignes med **📝 tekst**
+eller en **🕰️ analog klokke**. Med analog klokke velger du riktig urskive for et
+digitalt klokkeslett (Les klokka), eller riktig digitalt klokkeslett for en urskive
+(Sett klokka). På 24-timersnivåene står tiden på døgnet under urskiva, siden en
+analog klokke ikke skiller 05:00 fra 17:00.
+
 ### Nivåer
 
 1. 🕐 **Hele timer** — klokka ett, to, tre …

@@ -35,9 +35,14 @@
     <p class="lead">Velg et nivå og svar på 10 spørsmål. Riktig svar gir poeng, og framgangen din lagres.</p>
 
     <div class="modepick" role="group" aria-label="Spillmodus">
-      <button class="modebtn active" data-mode="read">🔢 ➜ 📝 Les klokka</button>
-      <button class="modebtn" data-mode="set">📝 ➜ 🔢 Sett klokka</button>
+      <button class="modebtn active" data-mode="read">🔢 ➜ <span class="faceicon">📝</span> Les klokka</button>
+      <button class="modebtn" data-mode="set"><span class="faceicon">📝</span> ➜ 🔢 Sett klokka</button>
       <button class="modebtn" data-mode="mix">🔀 Blandet</button>
+    </div>
+
+    <div class="modepick facepick" role="group" aria-label="Vis klokkeslettet som">
+      <button class="modebtn active" data-face="text">📝 Tekst</button>
+      <button class="modebtn" data-face="analog">🕰️ Analog klokke</button>
     </div>
 
     <div id="levelGrid" class="levelgrid"></div>

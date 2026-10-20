@@ -212,8 +212,9 @@ function randomTime(level){
 
 const wrapHour = (level, h) => level.hours24 ? ((h % 24) + 24) % 24 : ((h - 1 + 12) % 12) + 1;
 
-/** Typiske feilsvar: time-forskyvning, over/på-bytte, halvtime-bom, nabominutt. */
-function distractors(level, h, m, count){
+/** Typiske feilsvar: time-forskyvning, over/på-bytte, halvtime-bom, nabominutt.
+ *  Med analog klokke må alternativene se ulike ut, så 05:20 og 17:20 regnes som like. */
+function distractors(level, h, m, count, analog){
   const mins = level.mins;
   const idx  = mins.indexOf(m);
   const cand = [];
@@ -239,10 +240,11 @@ function distractors(level, h, m, count){
     add(h, m - rnd(1, 4));
   }
 
-  const seen = new Set([`${h}:${m}`]);
+  const keyOf = (hh, mm) => `${analog ? hh % 12 : hh}:${mm}`;
+  const seen = new Set([keyOf(h, m)]);
   const out  = [];
   for (const c of shuffle(cand)){
-    const key = `${c.h}:${c.m}`;
+    const key = keyOf(c.h, c.m);
     if (seen.has(key)) continue;
     seen.add(key);
     out.push(c);
@@ -250,18 +252,19 @@ function distractors(level, h, m, count){
   }
   while (out.length < count){                      // nødløsning: helt tilfeldig
     const c = randomTime(level);
-    const key = `${c.h}:${c.m}`;
+    const key = keyOf(c.h, c.m);
     if (!seen.has(key)){ seen.add(key); out.push(c); }
   }
   return out;
 }
 
-function makeQuestion(level, mode){
+function makeQuestion(level, mode, face){
   const dir = mode === 'mix' ? (Math.random() < 0.5 ? 'read' : 'set') : mode;
+  const analog = face === 'analog';
   const { h, m } = randomTime(level);
-  const wrong = distractors(level, h, m, 3);
+  const wrong = distractors(level, h, m, 3, analog);
   const times = shuffle([{ h, m, correct:true }, ...wrong.map(w => ({ ...w, correct:false }))]);
-  return { level, dir, h, m, times };
+  return { level, dir, analog, h, m, times };
 }
 
 /* ---------- 5. Lyd ---------- */
@@ -325,6 +328,7 @@ systemLight.addEventListener('change', () => { applyTheme(); refreshChips(); });
 applyTheme();
 
 let mode = 'read';
+let face = 'text';     // 'text' eller 'analog': hva det digitale klokkeslettet sammenlignes med
 
 function renderHome(){
   const grid = $('#levelGrid');
@@ -358,7 +362,7 @@ function startRound(levelId){
   const level = levelById(levelId);
   round = {
     level,
-    questions: Array.from({ length: ROUND_LENGTH }, () => makeQuestion(level, mode)),
+    questions: Array.from({ length: ROUND_LENGTH }, () => makeQuestion(level, mode, face)),
     index: 0, correct: 0, points: 0, streak: 0, answered: false,
   };
   $('#qTotal').textContent = ROUND_LENGTH;
@@ -375,6 +379,33 @@ function clockMarkup(h, m, level){
           ${level.hint ? `<div class="daypart">💡 ${level.hint}</div>` : ''}`;
 }
 
+/** Analog urskive som SVG. Timeviseren flytter seg gradvis mot neste time. */
+function analogMarkup(h, m, cls){
+  const pt = (deg, r) => {
+    const a = (deg - 90) * Math.PI / 180;
+    return [(50 + r * Math.cos(a)).toFixed(2), (50 + r * Math.sin(a)).toFixed(2)];
+  };
+  const line = (deg, r1, r2, c) => {
+    const [x1, y1] = pt(deg, r1), [x2, y2] = pt(deg, r2);
+    return `<line class="${c}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
+  };
+  let svg = '<circle class="face" cx="50" cy="50" r="46"/>';
+  for (let i = 0; i < 60; i++){
+    svg += i % 5 ? line(i * 6, 42, 44.5, 'tick') : line(i * 6, 39.5, 44.5, 'tick major');
+  }
+  for (let n = 1; n <= 12; n++){
+    const [x, y] = pt(n * 30, 32);
+    svg += `<text class="num" x="${x}" y="${y}">${n}</text>`;
+  }
+  svg += line((h % 12) * 30 + m / 2, -5, 22, 'hand hour');
+  svg += line(m * 6, -7, 36, 'hand minute');
+  svg += '<circle class="pin" cx="50" cy="50" r="3"/>';
+  return `<svg class="analog${cls ? ' ' + cls : ''}" viewBox="0 0 100 100" role="img"
+               aria-label="Analog klokke som viser ${timeText(h, m, false)}">${svg}</svg>`;
+}
+
+const capitalize = s => s[0].toUpperCase() + s.slice(1);
+
 function renderQuestion(){
   const q = round.questions[round.index];
   round.answered = false;
@@ -386,7 +417,13 @@ function renderQuestion(){
   $('#nextBtn').classList.add('hidden');
 
   const area = $('#questionArea');
-  if (q.dir === 'read'){
+  if (q.analog && q.dir === 'read'){
+    area.innerHTML = `<div class="qtitle">Hvilken klokke viser det samme?</div>${clockMarkup(q.h, q.m, q.level)}`;
+  } else if (q.analog){
+    // en analog klokke kan ikke vise 05 og 17 forskjellig, så tiden på døgnet står under
+    area.innerHTML = `<div class="qtitle">Hva er klokka?</div>${analogMarkup(q.h, q.m, 'big')}
+                      ${q.level.dayPart ? `<div class="daypart">🌗 ${capitalize(dayPart(q.h))}</div>` : ''}`;
+  } else if (q.dir === 'read'){
     area.innerHTML = `<div class="qtitle">Hva er klokka?</div>${clockMarkup(q.h, q.m, q.level)}`;
   } else {
     area.innerHTML = `<div class="qtitle">Hvilken klokke viser dette?</div>
@@ -394,12 +431,14 @@ function renderQuestion(){
                       ${q.level.hint ? `<div class="daypart">💡 ${q.level.hint}</div>` : ''}`;
   }
 
+  const showClocks = q.analog && q.dir === 'read';
   const box = $('#answers');
-  box.className = 'answers' + (q.dir === 'set' ? ' compact' : '');   // korte klokkeslett tåler to kolonner
+  box.className = 'answers' + (showClocks ? ' clocks' : q.dir === 'set' ? ' compact' : '');   // korte klokkeslett tåler to kolonner
   box.innerHTML = '';
   q.times.forEach(t => {
-    const label = q.dir === 'read' ? timeText(t.h, t.m, !!q.level.dayPart) : digital(t.h, t.m);
-    const btn = el('button', 'answer' + (q.dir === 'set' ? ' mono' : ''), label);
+    const label = showClocks ? analogMarkup(t.h, t.m)
+                : q.dir === 'read' ? timeText(t.h, t.m, !!q.level.dayPart) : digital(t.h, t.m);
+    const btn = el('button', 'answer' + (showClocks ? ' clockbtn' : q.dir === 'set' ? ' mono' : ''), label);
     btn.addEventListener('click', () => answer(btn, t));
     box.appendChild(btn);
   });
@@ -534,11 +573,20 @@ function renderStats(){
 
 /* ---------- 9. Hendelser ---------- */
 
-document.querySelectorAll('.modebtn').forEach(b => {
+document.querySelectorAll('.modebtn[data-mode]').forEach(b => {
   b.addEventListener('click', () => {
-    document.querySelectorAll('.modebtn').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.modebtn[data-mode]').forEach(x => x.classList.remove('active'));
     b.classList.add('active');
     mode = b.dataset.mode;
+  });
+});
+
+document.querySelectorAll('.modebtn[data-face]').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.modebtn[data-face]').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    face = b.dataset.face;
+    document.querySelectorAll('.faceicon').forEach(i => { i.textContent = face === 'analog' ? '🕰️' : '📝'; });
   });
 });
 

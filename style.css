@@ -158,6 +158,7 @@ button:active{transform:scale(.97)}
   padding:10px 16px;border-radius:999px;border:2px solid transparent;
 }
 .modebtn.active{border-color:var(--accent);color:var(--ink);background:var(--card2)}
+.facepick{margin-top:-12px}
 
 /* ---------- nivåkort ---------- */
 .levelgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
@@ -212,6 +213,18 @@ button:active{transform:scale(.97)}
 }
 .daypart{margin-top:10px;color:var(--muted);font-size:16px}
 
+/* analog klokke */
+.analog{display:block;width:100%;height:auto}
+.analog.big{width:clamp(170px,48vw,230px);margin:0 auto;filter:drop-shadow(var(--shadow))}
+.analog .face{fill:var(--clock-bg);stroke:var(--clock-border);stroke-width:2.5}
+.analog .tick{stroke:var(--muted);stroke-width:.8}
+.analog .tick.major{stroke:var(--ink);stroke-width:1.8}
+.analog .num{fill:var(--ink);font-size:10px;font-weight:800;text-anchor:middle;dominant-baseline:central}
+.analog .hand{stroke-linecap:round}
+.analog .hour{stroke:var(--ink);stroke-width:5}
+.analog .minute{stroke:var(--accent);stroke-width:3}
+.analog .pin{fill:var(--accent2)}
+
 /* tekstspørsmål */
 .textclock{
   font-size:clamp(26px,7vw,40px);font-weight:900;line-height:1.3;
@@ -227,6 +240,8 @@ button:active{transform:scale(.97)}
   border-radius:var(--radius);padding:18px 14px;font-size:19px;font-weight:800;
   text-align:center;min-height:68px;box-shadow:var(--shadow);line-height:1.3;
 }
+.answer.clockbtn{padding:10px;display:flex;justify-content:center;align-items:center}
+.answer.clockbtn .analog{max-width:150px}
 .answer.mono{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:30px;letter-spacing:2px;color:var(--accent)}
 .answer:hover:not(:disabled){background:var(--card2);border-color:var(--line-strong)}
 .answer:disabled{cursor:default;opacity:.55}
@@ -291,7 +306,8 @@ button:active{transform:scale(.97)}
 
 /* ---------- mobiltilpasning ---------- */
 @media (max-width:560px){
-  .answers.compact{grid-template-columns:1fr 1fr}   /* 07:00 er kort — to i bredden går fint */
+  .answers.compact,
+  .answers.clocks{grid-template-columns:1fr 1fr}   /* 07:00 er kort — to i bredden går fint */
 }
 
 @media (max-width:480px){
@@ -335,6 +351,9 @@ button:active{transform:scale(.97)}
   .textclock{font-size:clamp(22px,6.4vw,32px);padding:18px 14px}
   .answers{gap:10px}
   .answer{min-height:56px;padding:13px 10px}
+  .answer.clockbtn{padding:6px}
+  .answer.clockbtn .analog{max-width:118px}
+  .analog.big{width:clamp(150px,40vw,190px)}
   .feedback{min-height:48px;margin:14px 0 4px}
 }
 
@@ -360,5 +379,9 @@ button:active{transform:scale(.97)}
   .clock .ghost-digits{inset:8px 20px}
   .textclock{font-size:clamp(22px,5vh,30px);padding:14px}
   .answer{min-height:52px;padding:12px 10px;font-size:17px}
+  .answers.clocks{grid-template-columns:repeat(4,1fr)}
+  .answer.clockbtn{padding:6px}
+  .answer.clockbtn .analog{max-width:110px}
+  .analog.big{width:clamp(120px,32vh,170px)}
   .feedback{min-height:44px;margin:12px 0 4px}
 }
