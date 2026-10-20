@@ -91,6 +91,16 @@ button:active{transform:scale(.97)}
   font-size:17px;font-weight:800;text-decoration:underline;
   padding:12px 18px;min-height:44px;                  /* trykkflate på mobil */
 }
+.privacylink{display:block;text-align:center;margin-top:18px;color:var(--muted);font-size:14px}
+
+/* ---------- personvernside ---------- */
+.homelink{color:inherit;text-decoration:none}
+.prose{line-height:1.6}
+.prose p,.prose li{color:var(--ink);font-size:16px}
+.prose a{color:var(--accent)}
+.prose a.primary{color:#06210f;text-decoration:none;display:inline-block}
+.prose code{background:var(--card);padding:1px 6px;border-radius:6px;font-size:14px}
+.prose .updated{color:var(--muted);font-size:14px;margin-top:-8px}
 .rowbtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px}
 .hidden{display:none !important}
 

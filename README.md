@@ -9,7 +9,7 @@ Et lite læringsspill for å øve på å lese klokka på norsk — fra hele time
 
 Klokkelab er ren HTML, CSS og JavaScript uten byggesteg eller rammeverk.
 All progresjon lagres lokalt i nettleseren (`localStorage`) — ingen data sendes
-noe sted, og ingen innlogging trengs.
+noe sted, og ingen innlogging trengs. Se [personvernerklæringen](personvern.html).
 
 ### Spillmoduser
 
@@ -24,10 +24,11 @@ noe sted, og ingen innlogging trengs.
 1. 🕐 **Hele timer** — klokka ett, to, tre …
 2. 🕜 **Halve timer** — halv to, halv ni (husk at halv ni er 08:30!)
 3. 🕒 **Kvarter** — kvart over og kvart på
-4. 🕔 **Fem og fem** — ti på halv, fem over halv …
-5. ⏱️ **Alle minutter** — også «tre minutter over sju»
-6. 🌗 **24-timers hele timer** — morgen, kveld eller natt?
-7. 🌍 **24-timers klokke** — 13:45 = kvart på to på ettermiddagen
+4. 🕙 **Ti og ti** — ti over, ti på halv, ti over halv …
+5. 🕔 **Fem og fem** — fem på halv, fem over halv …
+6. ⏱️ **Alle minutter** — også «tre minutter over sju»
+7. 🌗 **24-timers hele timer** — morgen, kveld eller natt?
+8. 🌍 **24-timers klokke** — 13:45 = kvart på to på ettermiddagen
 
 Hver runde er 10 spørsmål. Underveis samler du poeng, bygger rekker og låser opp
 merker som «Feilfritt», «10 på rad» og «Klokkemester».
@@ -56,6 +57,7 @@ docker run -d -p 8080:80 klokkelab
 | Fil | Innhold |
 |---|---|
 | `index.html` | Markup og alle skjermbilder |
+| `personvern.html` | Personvernerklæring |
 | `app.js` | Spillogikk, klokkeslett-til-tekst, progresjon |
 | `style.css` | Styling |
 | `Dockerfile` | nginx-image for servering |
