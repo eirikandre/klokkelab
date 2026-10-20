@@ -81,6 +81,7 @@ function minuteExplain(h, m){
 
 /* ---------- 2. Nivåer ---------- */
 
+const every10 = [0,10,20,30,40,50];
 const every5 = [0,5,10,15,20,25,30,35,40,45,50,55];
 const allMin = Array.from({length:60}, (_, i) => i);
 
@@ -88,7 +89,8 @@ const LEVELS = [
   { id:1, icon:'🕐', name:'Hele timer',      desc:'Klokka ett, to, tre …',                mins:[0],            example:'07:00' },
   { id:2, icon:'🕜', name:'Halve timer',     desc:'Halv to, halv ni — husk at halv ni er 08:30!', mins:[0,30], example:'08:30' },
   { id:3, icon:'🕒', name:'Kvarter',         desc:'Kvart over og kvart på',               mins:[0,15,30,45],   example:'04:45' },
-  { id:4, icon:'🕔', name:'Fem og fem',      desc:'Ti på halv, fem over halv …',          mins:every5,         example:'08:35' },
+  { id:8, icon:'🕙', name:'Ti og ti',        desc:'Ti over, ti på halv, ti over halv …',  mins:every10,        example:'07:20' },
+  { id:4, icon:'🕔', name:'Fem og fem',      desc:'Fem på halv, fem over halv …',         mins:every5,         example:'08:35' },
   { id:5, icon:'⏱️', name:'Alle minutter',   desc:'Også «tre minutter over sju»',         mins:allMin,         example:'06:23' },
   { id:7, icon:'🌗', name:'24-timers hele timer', desc:'Hele timer fra 00 til 23 — morgen, kveld eller natt?', mins:[0], example:'18:00',
     hours24:true, dayPart:true, hint:'Er tallet større enn 12? Trekk fra 12.' },
