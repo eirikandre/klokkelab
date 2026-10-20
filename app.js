@@ -117,7 +117,7 @@ const BADGES = [
 
 function emptyState(){
   return { xp:0, bestStreak:0, rounds:0, totalCorrect:0, totalAnswered:0,
-           levels:{}, days:{}, badges:[], sound:true };
+           levels:{}, days:{}, badges:[], sound:true, theme:null };
 }
 
 function loadState(){
@@ -307,7 +307,22 @@ function refreshChips(){
   $('#xpChip').textContent = state.xp;
   $('#streakChip').textContent = state.bestStreak;
   $('#soundBtn').textContent = state.sound ? '🔊' : '🔇';
+  $('#themeBtn').textContent = isLight() ? '🌙' : '☀️';    // viser temaet du bytter til
 }
+
+/* ---------- tema ---------- */
+const systemLight = window.matchMedia('(prefers-color-scheme: light)');
+const isLight = () => (state.theme || (systemLight.matches ? 'light' : 'dark')) === 'light';
+
+function applyTheme(){
+  if (state.theme) document.documentElement.dataset.theme = state.theme;
+  else delete document.documentElement.dataset.theme;
+  document.querySelectorAll('meta[name="theme-color"]').forEach(m => {
+    m.content = isLight() ? '#f3f5ff' : '#0f1226';
+  });
+}
+systemLight.addEventListener('change', () => { applyTheme(); refreshChips(); });
+applyTheme();
 
 let mode = 'read';
 
@@ -534,6 +549,13 @@ $('#homeBtn').addEventListener('click', () => { renderHome(); show('home'); });
 $('#statsLink').addEventListener('click', () => { renderStats(); show('stats'); });
 $('#backBtn').addEventListener('click', () => { renderHome(); show('home'); });
 
+$('#themeBtn').addEventListener('click', () => {
+  state.theme = isLight() ? 'dark' : 'light';
+  saveState();
+  applyTheme();
+  refreshChips();
+});
+
 $('#soundBtn').addEventListener('click', () => {
   state.sound = !state.sound;
   saveState();
@@ -542,7 +564,7 @@ $('#soundBtn').addEventListener('click', () => {
 
 $('#resetBtn').addEventListener('click', () => {
   if (confirm('Vil du slette all framgang? Dette kan ikke angres.')){
-    state = emptyState();
+    state = Object.assign(emptyState(), { theme: state.theme });   // temavalget er ikke framgang
     saveState();
     renderStats();
     renderHome();

@@ -3,8 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0f1226">
+<meta name="theme-color" content="#0f1226" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f3f5ff" media="(prefers-color-scheme: light)">
 <title>Personvern – Klokkelab</title>
+<script>
+  /* sett valgt tema før siden tegnes, så den ikke blinker i feil farge */
+  try { const t = JSON.parse(localStorage.getItem('klokkelab.v1') || '{}').theme;
+        if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⏰</text></svg>">
 </head>
@@ -24,7 +30,7 @@
 
   <h3>Hva lagres, og hvor?</h3>
   <p>Framgangen din – poeng, rekker, antall runder, resultater per nivå, hvilke dager du har øvd,
-    merker du har låst opp og om lyden er på – lagres <b>bare lokalt i din egen nettleser</b>
+    merker du har låst opp, om lyden er på og om du har valgt lyst eller mørkt tema – lagres <b>bare lokalt i din egen nettleser</b>
     (<code>localStorage</code>, under nøkkelen <code>klokkelab.v1</code>).</p>
   <p>Disse dataene sendes aldri til oss eller andre, og de kan ikke knyttes til deg som person.
     Bruker du en annen nettleser eller enhet, starter du derfor på nytt.</p>
