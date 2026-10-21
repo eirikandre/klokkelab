@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f1226" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f3f5ff" media="(prefers-color-scheme: light)">
+<title>Om Klokkelab</title>
+<meta name="description" content="Om Klokkelab: et gratis læringsspill for å øve på å lese klokka på norsk. Åpen kildekode – si fra om feil eller ideer på GitHub.">
+<link rel="canonical" href="https://klokkelab.eidsa.no/om.html">
+<script>
+  /* sett valgt tema før siden tegnes, så den ikke blinker i feil farge */
+  try { const t = JSON.parse(localStorage.getItem('klokkelab.v1') || '{}').theme;
+        if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand homelink" href="./"><span class="logo">⏰</span> <span class="brandname">Klokkelab</span></a>
+</header>
+
+<main class="prose">
+  <h2>ℹ️ Om Klokkelab</h2>
+  <p>Klokkelab er et lite, gratis spill for å øve på å lese klokka på norsk – fra «klokka sju» og
+    «halv ni» til «tre minutter over sju» og 24-timersklokka.</p>
+
+  <h3>Hvordan den virker</h3>
+  <p>Velg et nivå og svar på 10 spørsmål. Du kan lese klokka og velge riktig tekst, eller få teksten og
+    finne riktig klokkeslett. Vil du øve på urskiva, bytter du teksten ut med en analog klokke.
+    Riktige svar gir poeng og rekker, og et nivå er mestret når du har 9 av de 10 siste riktige.</p>
+
+  <h3>Bidra</h3>
+  <p>Klokkelab er åpen kildekode med <a href="https://github.com/eirikandre/klokkelab/blob/main/LICENSE">MIT-lisens</a>.
+    Har du funnet en feil eller har en idé? <a href="https://github.com/eirikandre/klokkelab/issues/new">Si fra
+    med en issue på GitHub</a> – du trenger ikke kunne kode.</p>
+  <p>Vil du fikse noe selv, er du velkommen til å sende en pull request. Koden ligger på
+    <a href="https://github.com/eirikandre/klokkelab">github.com/eirikandre/klokkelab</a>.</p>
+
+  <p><a href="personvern.html">🔒 Les personvernerklæringen</a></p>
+
+  <div class="rowbtns">
+    <a class="primary" href="./">← Til Klokkelab</a>
+  </div>
+</main>
+
+</body>
+</html>

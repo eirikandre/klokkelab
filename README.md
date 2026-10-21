@@ -63,6 +63,7 @@ docker run -d -p 8080:80 klokkelab
 | Fil | Innhold |
 |---|---|
 | `index.html` | Markup og alle skjermbilder |
+| `om.html` | Om-side med lenker for å bidra |
 | `personvern.html` | Personvernerklæring |
 | `app.js` | Spillogikk, klokkeslett-til-tekst, progresjon |
 | `style.css` | Styling |
