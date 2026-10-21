@@ -3,7 +3,7 @@
 Et lite læringsspill for å øve på å lese klokka på norsk — fra hele timer til
 «tre minutter over sju» og 24-timersklokka.
 
-**👉 Appen ligger på [https://klokkelab.eidså.no](https://klokkelab.eidså.no)**
+**👉 Appen ligger på [https://klokkelab.eidsa.no](https://klokkelab.eidsa.no)**
 
 ## Om appen
 
@@ -66,5 +66,7 @@ docker run -d -p 8080:80 klokkelab
 | `personvern.html` | Personvernerklæring |
 | `app.js` | Spillogikk, klokkeslett-til-tekst, progresjon |
 | `style.css` | Styling |
+| `favicon.svg` | Ikon i fanen og i søkeresultater |
+| `robots.txt`, `sitemap.xml` | Forteller søkemotorer hvilke sider som finnes |
 | `Dockerfile` | nginx-image for servering |
 | `nginx.conf` | Serverkonfig: gzip, caching |
