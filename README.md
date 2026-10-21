@@ -67,6 +67,7 @@ docker run -d -p 8080:80 klokkelab
 | `app.js` | Spillogikk, klokkeslett-til-tekst, progresjon |
 | `style.css` | Styling |
 | `favicon.svg` | Ikon i fanen og i søkeresultater |
+| `og-image.png` | Forhåndsvisningsbilde når lenken deles |
 | `robots.txt`, `sitemap.xml` | Forteller søkemotorer hvilke sider som finnes |
 | `Dockerfile` | nginx-image for servering |
 | `nginx.conf` | Serverkonfig: gzip, caching |

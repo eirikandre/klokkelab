@@ -5,7 +5,7 @@ FROM nginx:1.27-alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Selve appen
-COPY index.html personvern.html style.css app.js favicon.svg robots.txt sitemap.xml /usr/share/nginx/html/
+COPY index.html personvern.html style.css app.js favicon.svg og-image.png robots.txt sitemap.xml /usr/share/nginx/html/
 
 EXPOSE 80
 
